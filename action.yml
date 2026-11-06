@@ -1,4 +1,4 @@
-name: 'CI Failure Investigator'
+name: 'BuildFix AI'
 description: 'Analyzes failed CI logs, identifies likely root cause, and posts a readable PR summary.'
 branding:
   icon: 'activity'

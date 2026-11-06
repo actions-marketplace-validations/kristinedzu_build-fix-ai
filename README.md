@@ -1,4 +1,4 @@
-# CI Failure Investigator
+# BuildFix AI
 
 A GitHub Action that reads failed CI logs, explains the likely root cause in plain English, compares the failure against recent commit context, and posts a readable summary directly on the pull request.
 
