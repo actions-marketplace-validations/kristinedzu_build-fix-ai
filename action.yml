@@ -1,7 +1,8 @@
 name: 'BuildFix AI'
-description: 'Analyzes failed CI logs, identifies likely root cause, and posts a readable PR summary.'
+description: 'Explains failed CI builds in plain English: likely root cause, related commits, and a suggested fix posted to the PR.'
+author: 'kristinedzu'
 branding:
-  icon: 'activity'
+  icon: 'tool'
   color: 'purple'
 
 inputs:
@@ -10,7 +11,8 @@ inputs:
     required: true
   github-token:
     description: 'GitHub token with pull-requests: write permissions.'
-    required: true
+    required: false
+    default: ${{ github.token }}
   repo:
     description: 'Repository in owner/repo format. Defaults to the current repository.'
     required: false

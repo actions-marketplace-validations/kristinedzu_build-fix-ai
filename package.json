@@ -2,6 +2,12 @@
   "name": "buildfix-ai",
   "version": "1.0.0",
   "private": true,
+  "description": "GitHub Action that explains failed CI builds and posts a fix suggestion to the pull request.",
+  "license": "MIT",
+  "repository": "github:kristinedzu/build-fix-ai",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "test": "node --test"
   }

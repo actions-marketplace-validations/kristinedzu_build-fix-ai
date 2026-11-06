@@ -20,10 +20,10 @@ function parseArgs(argv) {
 
 function getEnvironmentOverrides(args) {
   return {
-    logFile: args.logFile || process.env.INPUT_LOG_FILE || process.env.LOG_FILE || '',
+    logFile: args.logFile || process.env['INPUT_LOG-FILE'] || process.env.LOG_FILE || '',
     repo: args.repo || process.env.INPUT_REPO || process.env.GITHUB_REPOSITORY || '',
-    token: args.token || process.env.INPUT_GITHUB_TOKEN || process.env.GITHUB_TOKEN || '',
-    prNumber: args.prNumber || process.env.INPUT_PR_NUMBER || process.env.PR_NUMBER || '',
+    token: args.token || process.env['INPUT_GITHUB-TOKEN'] || process.env.GITHUB_TOKEN || '',
+    prNumber: args.prNumber || process.env['INPUT_PR-NUMBER'] || process.env.PR_NUMBER || '',
   };
 }
 
@@ -66,7 +66,7 @@ function extractTestNames(lines) {
 
 function getRecentCommitSummary() {
   try {
-    const output = execSync('git log --pretty=format:%h %s -n 5', { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
+    const output = execSync('git log "--pretty=format:%h %s" -n 5', { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
     return output
       .split(/\r?\n/)
       .map((entry) => entry.trim())
@@ -367,6 +367,7 @@ if (require.main === module) {
 
 module.exports = {
   parseArgs,
+  getEnvironmentOverrides,
   summarizeFailure,
   buildLikelyCause,
   buildSuggestedFix,

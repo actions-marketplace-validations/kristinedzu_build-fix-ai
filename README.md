@@ -49,16 +49,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Run tests
-        run: npm test -- --runInBand 2>&1 | tee ci.log || true
-
-  investigate:
-    needs: test
-    if: ${{ failure() }}
-    runs-on: ubuntu-latest
     permissions:
       contents: read
       pull-requests: write
@@ -66,13 +56,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Run tests
+        shell: bash
+        run: |
+          set -o pipefail
+          npm test 2>&1 | tee ci.log
+
       - name: Investigate failed CI
-        uses: your-org/ci-failure-investigator@v1
+        if: ${{ failure() }}
+        uses: kristinedzu/build-fix-ai@v1
         with:
           log-file: ci.log
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          repo: ${{ github.repository }}
-          pr-number: ${{ github.event.pull_request.number }}
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           OPENAI_MODEL: gpt-4o-mini
@@ -83,9 +77,9 @@ jobs:
 | Input | Required | Description |
 | --- | --- | --- |
 | `log-file` | Yes | The path to the failing build or test log |
-| `github-token` | Yes | GitHub token with `pull-requests: write` permissions |
-| `repo` | No | Repository name in `owner/repo` format |
-| `pr-number` | No | Pull request number to comment on |
+| `github-token` | No | Token with `pull-requests: write`. Defaults to `github.token` |
+| `repo` | No | Repository in `owner/repo` format. Defaults to the current repository |
+| `pr-number` | No | Pull request number to comment on. Defaults to the current PR |
 
 ## Optional AI mode
 
@@ -115,7 +109,7 @@ git push origin v1
 5. Reference it from consumer repos as:
 
 ```yaml
-- uses: your-org/ci-failure-investigator@v1
+- uses: kristinedzu/build-fix-ai@v1
 ```
 
 ## Project layout
@@ -123,9 +117,8 @@ git push origin v1
 - `action.yml` — marketplace action definition
 - `src/index.js` — investigation logic
 - `scripts/demo-llm-summary.js` — sample summary output
-- `.github/workflows/ci-failure-investigator-example.yml` — example internal workflow
 - `sample-data/failure.log` — sample failing log
 
 ## License
 
-This project is provided as sample reference code for building GitHub Actions.
+[MIT](LICENSE)
