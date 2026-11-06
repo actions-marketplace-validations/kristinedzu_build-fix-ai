@@ -1,0 +1,20 @@
+name: CI Failure Investigator
+description: Reads the CI log, identifies likely root cause, and posts a readable summary to the PR.
+
+inputs:
+  log-file:
+    description: Path to the log file produced by the failed test or build job.
+    required: true
+  github-token:
+    description: GitHub token with pull request write permissions.
+    required: true
+  repo:
+    description: Repository name as owner/repo.
+    required: false
+  pr-number:
+    description: Pull request number.
+    required: false
+
+runs:
+  using: node20
+  main: ../../../src/index.js

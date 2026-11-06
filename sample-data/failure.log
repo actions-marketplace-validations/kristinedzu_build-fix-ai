@@ -1,0 +1,27 @@
+FAIL src/auth/auth.test.ts
+  ● returns a valid user payload
+
+    Expected: {
+      id: 42,
+      email: 'test@example.com',
+      role: 'admin'
+    }
+
+    Received: {
+      id: 42,
+      email: 'test@example.com',
+      role: 'member'
+    }
+
+    Error: AssertionError: expected "member" to equal "admin"
+
+FAIL src/auth/session.test.ts
+  ● should refresh session
+
+    TypeError: Cannot read properties of undefined (reading 'token')
+
+FAIL src/api/client.test.ts
+  ● should handle unauthorized responses
+
+    Expected status 401 to be valid.
+    Received status 403.
