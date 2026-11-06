@@ -1,8 +1,8 @@
-name: 'BuildFix AI'
+name: 'BuildFix AI CI Failure Explainer'
 description: 'Explains failed CI builds in plain English: likely root cause, related commits, and a suggested fix posted to the PR.'
 author: 'kristinedzu'
 branding:
-  icon: 'tool'
+  icon: 'search'
   color: 'purple'
 
 inputs:
